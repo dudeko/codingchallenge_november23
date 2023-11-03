@@ -1,0 +1,9 @@
+body {
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+
+#log-line {
+  font-family: "Monaco", monospace;
+  font-size: 12px;
+}

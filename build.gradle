@@ -27,21 +27,22 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//node {
-//	download = true
-//	version = "18.16.1"
-//	nodeProjectDir = file("${project.projectDir}/frontend-app")
-//}
-//
-//tasks.register('npmBuild', NpmTask) {
-//	args = [ 'run', 'build' ]
-//	doLast {
-//		println 'npm run build executed successfully'
-//	}
-//}
-//
-//npmBuild.mustRunAfter npmInstall
-//
-//tasks.named('compileJava') {
-//	dependsOn(':npmBuild')
-//}
+node {
+	download = true
+	version = "18.16.1"
+	nodeProjectDir = file("${project.projectDir}/frontend-app")
+}
+
+tasks.register('npmBuild', NpmTask) {
+	args = [ 'run', 'build' ]
+	doLast {
+		println 'npm run build executed successfully'
+	}
+}
+
+npmBuild.mustRunAfter npmInstall
+
+tasks.named('compileJava') {
+	dependsOn(':npmInstall')
+	dependsOn(':npmBuild')
+}

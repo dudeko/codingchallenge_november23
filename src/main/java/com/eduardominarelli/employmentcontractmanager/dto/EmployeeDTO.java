@@ -89,7 +89,10 @@ public class EmployeeDTO {
         if (this.getEmployeeDocumentList() == null) {
             return of();
         }
-        return this.getEmployeeDocumentList().stream().map(EmployeeDocumentDTO::getFile).toList();
+        return this.getEmployeeDocumentList().stream()
+                .filter(EmployeeDocumentDTO::hasFile)
+                .map(EmployeeDocumentDTO::getFile)
+                .toList();
     }
 
     public Employee toEntity() {
@@ -102,5 +105,17 @@ public class EmployeeDTO {
                 .withCellphoneNumber(this.getCellphoneNumber())
                 .withAddress(this.getAddress() != null ? this.getAddress().toEntity() : null)
                 .withDocuments(EmployeeDocumentDTO.toEntityList(this.getEmployeeDocumentList()));
+    }
+
+    public boolean isNameContained(Employee employee) {
+        return employee.getName().toLowerCase().contains(this.getName().toLowerCase());
+    }
+
+    public boolean isCityContained(Employee employee) {
+        return employee.getAddress().getCity().toLowerCase().contains(this.getAddress().getCity().toLowerCase());
+    }
+
+    public boolean isStateContained(Employee employee) {
+        return employee.getAddress().getState().toLowerCase().contains(this.getAddress().getState().toLowerCase());
     }
 }

@@ -40,14 +40,8 @@ public class DataAccessServiceImpl implements DataAccessService {
         }
     }
 
-    private <T extends IdentifiableEntity> File createOrRetrieveFileBasedOnClassName(Class<T> objectClass) {
-        try {
-            File file = new File(DATASTORE_FOLDER + objectClass.getSimpleName() + ".json");
-            file.createNewFile();
-            return file;
-        } catch (IOException ex) {
-            throw new RuntimeException("There was an error creating the file.", ex);
-        }
+    private <T extends IdentifiableEntity> File createOrRetrieveFileBasedOnClassName(Class<T> objectClass) throws IOException {
+        return createOrRetrieve(DATASTORE_FOLDER + objectClass.getSimpleName() + ".json");
     }
 
     @Override

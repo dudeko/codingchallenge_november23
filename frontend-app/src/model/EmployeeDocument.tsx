@@ -1,5 +1,5 @@
 export default interface EmployeeDocument {
     documentType: string,
-    file: any,
-    filename: string
+    file?: File,
+    filename?: string
 }

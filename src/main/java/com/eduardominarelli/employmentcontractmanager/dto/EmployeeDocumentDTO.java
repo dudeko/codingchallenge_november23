@@ -33,8 +33,13 @@ public class EmployeeDocumentDTO {
             return Collections.emptyList();
         }
         return employeeDocumentList.stream()
+                                   .filter(EmployeeDocumentDTO::hasFile)
                                    .map(EmployeeDocumentDTO::toEntity)
                                    .toList();
+    }
+
+    public static boolean hasFile(EmployeeDocumentDTO employeeDocumentDTO) {
+        return employeeDocumentDTO.getFile() != null;
     }
 
     private EmployeeDocument toEntity() {

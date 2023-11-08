@@ -30,6 +30,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         storeUploadedFiles(employeeDTO, employee.getId().toString());
     }
 
+    @Override
+    public List<Employee> search(EmployeeDTO employeeDTO) throws IOException {
+        return this.retrieveAll().stream()
+                .filter(employeeDTO::isNameContained)
+                .filter(employeeDTO::isCityContained)
+                .filter(employeeDTO::isStateContained)
+                .toList();
+    }
+
     private void storeUploadedFiles(EmployeeDTO employeeDTO, String employeeId) {
         dataAccessService.uploadFiles(employeeDTO.getMultipartFiles(), employeeId);
     }

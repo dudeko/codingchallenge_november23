@@ -1,10 +1,10 @@
 export default class Address {
-    street: string = ''
-    number: string = ''
-    city: string = ''
-    state: string = ''
+    street = ''
+    number = ''
+    city = ''
+    state = ''
 
-    constructor(address: any) {
+    constructor(address?: Address) {
         if (address) {
             this.street = address.street
             this.number = address.number

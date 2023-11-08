@@ -13,4 +13,6 @@ public interface EmployeeService {
     Employee save(Employee employee) throws IOException;
 
     void saveFromDTO(EmployeeDTO employeeDTO) throws IOException;
+
+    List<Employee> search(EmployeeDTO employeeDTO) throws IOException;
 }

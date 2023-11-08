@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Col, FormControl, Row } from "react-bootstrap"
+import { Button, Col, Form, Row } from "react-bootstrap"
 import Employee from "../model/Employee"
 
 interface EmployeeSearchFormProp {
@@ -8,7 +8,7 @@ interface EmployeeSearchFormProp {
 
 const EmployeeSearchForm = ({ onSearchEmployee } : EmployeeSearchFormProp) => {
 
-    const [employeeSearchData, setEmployeeSearchData] = useState({} as Employee)
+    const [employeeSearchData, setEmployeeSearchData] = useState({name: '', address:{ city: '', state: ''}} as Employee)
 
     const handleChange = (propertyName: string) => {
         return (event: any) => setEmployeeSearchData((prevEmployeeSearchData: any) => {
@@ -16,25 +16,34 @@ const EmployeeSearchForm = ({ onSearchEmployee } : EmployeeSearchFormProp) => {
         })
       }
 
-      const handleAddressChange = (propertyName: string) => {
+    const handleAddressChange = (propertyName: string) => {
         return (event: any) => setEmployeeSearchData((prevEmployeeSearchData: any) => {
-          return {...prevEmployeeSearchData, address: { ...prevEmployeeSearchData.address, [propertyName]: event.target.value} }
+            return {...prevEmployeeSearchData, address: { ...prevEmployeeSearchData.address, [propertyName]: event.target.value} }
         })
+    }
+
+    const handleEnterKey = (event: any) => {
+      if (event.key === "Enter") {
+        onSearchEmployee(employeeSearchData)
       }
+    }
 
     return <>
         <Row className='mb-3'>
-            <Col lg={12} md={5} sm xs>
-                <label>Name<FormControl onChange={handleChange("name")}></FormControl></label>
-            </Col>
-            <Col lg={12} md={3} sm xs>
-                <label>City<FormControl onChange={handleAddressChange("city")}></FormControl></label>
-            </Col>
-            <Col lg={12} md={2} sm xs>
-                <label>State<FormControl onChange={handleAddressChange("state")}></FormControl></label>
-            </Col>
-            <Col lg={12} md={2} sm xs className='text-center mt-4'>
-                <Button className='' onClick={() => onSearchEmployee(employeeSearchData)}>Search</Button>
+            <Form.Group as={Col} xs={12} md={5} className="mb-3">
+                <Form.Label>Name</Form.Label>
+                <Form.Control onChange={handleChange("name")} onKeyDown={handleEnterKey} />
+            </Form.Group>
+            <Form.Group as={Col} xs={12} md={3} className="mb-3">
+                <Form.Label>City</Form.Label>
+                <Form.Control onChange={handleAddressChange("city")} onKeyDown={handleEnterKey}  />
+            </Form.Group>
+            <Form.Group as={Col} xs={12} md={2} className="mb-3">
+                <Form.Label>State</Form.Label>
+                <Form.Control onChange={handleAddressChange("state")} onKeyDown={handleEnterKey}  />
+            </Form.Group>
+            <Col md={1} sm xs style={{ paddingTop: 32 }}>
+                <Button variant={'secondary'} onClick={() => onSearchEmployee(employeeSearchData)}>Search</Button>
             </Col>
         </Row>
     </>
